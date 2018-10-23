@@ -6,3 +6,6 @@ https://opengameart.org/content/brown-asteroid
 
 Space Backdrop:
 https://opengameart.org/content/space-backdrop
+
+Sun:
+https://opengameart.org/content/shiny-sun
