@@ -2,10 +2,10 @@ package com.nickpoole.defendtheworld;
 
 public class Planet extends BaseActor {
 
-    private float originX;
-    private float originY;
-    private float angle;
+    private final float originX;
+    private final float originY;
     private final int anglePerFrame = 1;
+    private float angle;
 
     public Planet(float originX, float originY) {
         super();
@@ -16,7 +16,7 @@ public class Planet extends BaseActor {
 
     @Override
     public void act(float delta) {
-        
+
         angle += delta * anglePerFrame;
 
         setPosition(

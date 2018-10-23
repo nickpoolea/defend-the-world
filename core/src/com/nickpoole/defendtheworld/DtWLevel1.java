@@ -14,6 +14,7 @@ public class DtWLevel1 implements Screen {
     private BaseActor background;
     private BaseActor sun;
     private Planet planet;
+    private Ship ship;
 
     private float x;
     private float y;
@@ -49,6 +50,11 @@ public class DtWLevel1 implements Screen {
         );
         planet.setRegion(planetTexture);
         stage.addActor(planet);
+
+        ship = new Ship();
+        ship.setRegion(new Texture(Gdx.files.internal("ship.png")));
+        ship.setPosition(0, 0);
+        stage.addActor(ship);
 
     }
 
