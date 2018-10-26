@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DtWLevel1 implements Screen {
 
@@ -15,11 +17,11 @@ public class DtWLevel1 implements Screen {
     private BaseActor sun;
     private Planet planet;
     private Ship ship;
+    private List<Asteroid> asteroids;
 
-    private float x;
-    private float y;
-    private int radius = 100;
-    private float angle = 10;
+    private float gameTime = 0;
+
+    private final int AST_SPAWN_TIME = 5;
 
     public DtWLevel1(DtWGame game) {
         this.game = game;
@@ -29,6 +31,7 @@ public class DtWLevel1 implements Screen {
     public void create() {
 
         stage = new Stage();
+        asteroids = new ArrayList<Asteroid>();
 
         background = new BaseActor();
         background.setRegion(new Texture(Gdx.files.internal("space-backdrop.png")));
@@ -43,17 +46,12 @@ public class DtWLevel1 implements Screen {
         );
         stage.addActor(sun);
 
-        Texture planetTexture = new Texture(Gdx.files.internal("planet.png"));
-        planet = new Planet(
-                stage.getWidth() / 2 - planetTexture.getWidth() / 2,
-                stage.getHeight() / 2 - planetTexture.getHeight() / 2
-        );
-        planet.setRegion(planetTexture);
+        planet = new Planet();
+        planet.setRegion(new Texture(Gdx.files.internal("planet.png")));
         stage.addActor(planet);
 
         ship = new Ship();
         ship.setRegion(new Texture(Gdx.files.internal("ship.png")));
-        ship.setPosition(0, 0);
         stage.addActor(ship);
 
     }
@@ -66,7 +64,18 @@ public class DtWLevel1 implements Screen {
     @Override
     public void render(float delta) {
 
+        gameTime += delta;
 
+        if (gameTime > AST_SPAWN_TIME) {
+            Asteroid asteroid = new Asteroid();
+            asteroid.setRegion(new Texture(Gdx.files.internal("brown-asteroid.png")));
+            asteroids.add(asteroid);
+            gameTime = 0;
+        }
+
+        for (Asteroid asteroid : asteroids) {
+            stage.addActor(asteroid);
+        }
 
         Gdx.gl.glClearColor(0.8f, 0.8f, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

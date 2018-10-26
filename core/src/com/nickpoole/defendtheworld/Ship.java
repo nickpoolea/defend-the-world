@@ -1,7 +1,6 @@
 package com.nickpoole.defendtheworld;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 
 public class Ship extends BaseActor {
 

@@ -11,7 +11,6 @@ public class DesktopLauncher {
 		config.title = "Defend the World!";
 		config.height = 960;
 		config.width = 1280;
-
 		new LwjglApplication(new DtWGame(), config);
 	}
 }

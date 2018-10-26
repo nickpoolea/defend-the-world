@@ -11,23 +11,14 @@ public class BaseActor extends Actor {
     private TextureRegion region;
 
     public BaseActor() {
-
         super();
+        region = new TextureRegion();
     }
 
     public void setRegion(Texture texture) {
-
-        if (region == null) {
-            region = new TextureRegion();
-        }
         setWidth(texture.getWidth());
         setHeight(texture.getHeight());
         region.setRegion(texture);
-    }
-
-    @Override
-    public void act(float delta) {
-
     }
 
     @Override
