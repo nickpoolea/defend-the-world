@@ -1,16 +1,17 @@
 package com.nickpoole.defendtheworld;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.RegionInfluencer;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.Random;
 
-public class Asteroid extends BaseActor {
+public class Asteroid extends AnimatedActor {
 
     private Vector2 position;
     private Vector2 destination;
     private Vector2 velocity;
-    private final int speed = 100;
+    private final int speed = 300;
 
 
     public Asteroid() {
@@ -23,6 +24,7 @@ public class Asteroid extends BaseActor {
 
     @Override
     public void act(float delta) {
+        super.act(delta);
         velocity.set(
                 destination.x - position.x - getWidth() / 2,
                 destination.y - position.y - getHeight() / 2);
