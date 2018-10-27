@@ -11,6 +11,6 @@ public class DtWGame extends Game {
 
 	@Override
 	public void create() {
-		setScreen(new DtWLevel1(this));
+		setScreen(new DtWMenu(this));
 	}
 }
