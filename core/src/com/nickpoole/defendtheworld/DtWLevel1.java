@@ -11,9 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class DtWLevel1 implements Screen {
 
@@ -23,11 +21,11 @@ public class DtWLevel1 implements Screen {
     private BaseActor sun;
     private Planet planet;
     private Ship ship;
-    private List<Asteroid> asteroids;
+    private Array<Asteroid> asteroids;
     private Animation explosion;
 
-    private float asteroidTime = 0;
-    private final int SPAWN_TIME = 2;
+    private float spawnTimer = 0;
+    private final int spawnInterval = 2;
 
     public DtWLevel1(DtWGame game) {
         this.game = game;
@@ -37,7 +35,7 @@ public class DtWLevel1 implements Screen {
     public void create() {
 
         stage = new Stage();
-        asteroids = new ArrayList<Asteroid>();
+        asteroids = new Array<Asteroid>();
 
         background = new BaseActor();
         background.setRegion(new Texture(Gdx.files.internal("space-backdrop.png")));
@@ -74,21 +72,16 @@ public class DtWLevel1 implements Screen {
     }
 
     @Override
-    public void show() {
-
-    }
-
-    @Override
     public void render(float delta) {
 
-        asteroidTime += delta;
+        spawnTimer += delta;
 
-        if (asteroidTime > SPAWN_TIME) {
+        if (spawnTimer > spawnInterval) {
+            spawnTimer = 0;
             Asteroid asteroid = new Asteroid();
             asteroid.setRegion(new Texture(Gdx.files.internal("brown-asteroid.png")));
             asteroids.add(asteroid);
             stage.addActor(asteroid);
-            asteroidTime = 0;
         }
 
         Iterator<Asteroid> iterator = asteroids.iterator();
@@ -122,27 +115,20 @@ public class DtWLevel1 implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
-
-    }
+    public void show() {}
 
     @Override
-    public void pause() {
-
-    }
+    public void resize(int width, int height) {}
 
     @Override
-    public void resume() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void hide() {
-
-    }
+    public void resume() {}
 
     @Override
-    public void dispose() {
+    public void hide() {}
 
-    }
+    @Override
+    public void dispose() {}
 }

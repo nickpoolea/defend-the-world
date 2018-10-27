@@ -1,7 +1,6 @@
 package com.nickpoole.defendtheworld;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g3d.particles.influencers.RegionInfluencer;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.Random;
