@@ -27,14 +27,15 @@ public class DtWLevel1 implements Screen {
     private Ship ship;
     private Array<Asteroid> asteroids;
     private Animation explosion;
+    private float elapsedTime;
 
     private Label planetHealthLabel;
 
     private int planetHealth;
 
     private float spawnTimer = 0;
-    private final double spawnInterval = 0.5;
-    private final int planetDamage = 5;
+    private double spawnInterval = 0.5;
+    private final int planetDamage = 10;
 
     public DtWLevel1(DtWGame game) {
         this.game = game;
@@ -44,6 +45,7 @@ public class DtWLevel1 implements Screen {
     public void create() {
 
         planetHealth = 100;
+        elapsedTime = 0;
 
         stage = new Stage();
         asteroids = new Array<Asteroid>();
@@ -97,6 +99,12 @@ public class DtWLevel1 implements Screen {
     public void render(float delta) {
 
         spawnTimer += delta;
+        elapsedTime += delta;
+
+        if (elapsedTime > 5) {
+            spawnInterval -= 0.1;
+            elapsedTime = 0;
+        }
 
         if (spawnTimer > spawnInterval) {
             spawnTimer = 0;

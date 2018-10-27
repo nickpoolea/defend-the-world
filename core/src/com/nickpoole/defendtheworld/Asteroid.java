@@ -46,8 +46,20 @@ public class Asteroid extends AnimatedDestroyedActor {
         int width = Gdx.graphics.getWidth();
 
         Random r = new Random();
-        float startX = 0 - getWidth();
-        float startY = 0 - getHeight();
+
+        float startX = 0;
+        float startY = 0;
+
+        if(r.nextBoolean()) {
+            startX = 0 - getWidth();
+            startY = Gdx.graphics.getHeight() + getHeight();
+        } else {
+            startY = 0 - getHeight();
+            startX = Gdx.graphics.getWidth() + getWidth();
+        }
+
+
+
 
         if(r.nextBoolean()) {
             startX = r.nextInt(width + 1);
