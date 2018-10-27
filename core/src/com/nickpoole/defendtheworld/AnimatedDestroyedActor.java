@@ -4,12 +4,14 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class AnimatedActor extends BaseActor {
+public class AnimatedDestroyedActor extends BaseActor {
 
-    private Animation animation;
-    private float elapsedTime;
+    protected Animation animation;
+    protected float elapsedTime;
 
-    public AnimatedActor() {
+    protected boolean destroyed;
+
+    public AnimatedDestroyedActor() {
         super();
         animation = null;
         elapsedTime = 0;
@@ -18,7 +20,7 @@ public class AnimatedActor extends BaseActor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
-        if(animation != null) {
+        if(destroyed) {
             setRegion( ((TextureRegion) animation.getKeyFrame(elapsedTime)).getTexture());
         }
 
@@ -28,7 +30,7 @@ public class AnimatedActor extends BaseActor {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (animation != null) {
+        if (destroyed) {
             elapsedTime += delta;
         }
 
@@ -39,10 +41,15 @@ public class AnimatedActor extends BaseActor {
     }
 
     public boolean isAnimationFinished() {
-        if (animation == null) {
-            return false;
-        }
         return animation.isAnimationFinished(elapsedTime);
+    }
+
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
+    public void setDestroyed(boolean destroyed) {
+        this.destroyed = destroyed;
     }
 
 }

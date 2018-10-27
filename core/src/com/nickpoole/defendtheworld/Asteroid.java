@@ -5,35 +5,39 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.Random;
 
-public class Asteroid extends AnimatedActor {
+public class Asteroid extends AnimatedDestroyedActor {
 
     private Vector2 position;
     private Vector2 destination;
     private Vector2 velocity;
-    private final int speed = 300;
-
+    private int speed = 300;
+    private boolean interactive;
 
     public Asteroid() {
         super();
         position = new Vector2();
         velocity = new Vector2();
         destination = new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+        interactive = true;
         generateCoordinates();
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        velocity.set(
-                destination.x - position.x - getWidth() / 2,
-                destination.y - position.y - getHeight() / 2);
-        velocity.nor();
 
-        velocity.x *= speed * delta;
-        velocity.y *= speed * delta;
+        if (!destroyed) {
+            velocity.set(
+                    destination.x - position.x - getWidth() / 2,
+                    destination.y - position.y - getHeight() / 2);
+            velocity.nor();
 
-        position.add(velocity);
-        setPosition(position.x, position.y);
+            velocity.x *= speed * delta;
+            velocity.y *= speed * delta;
+
+            position.add(velocity);
+            setPosition(position.x, position.y);
+        }
 
     }
 
@@ -54,5 +58,19 @@ public class Asteroid extends AnimatedActor {
         setPosition(startX, startY);
         position.set(startX, startY);
     }
+
+    public void reverseDirection() {
+        speed *= -1;
+        setInteractive(false);
+    }
+
+    public boolean isInteractive() {
+        return interactive;
+    }
+
+    public void setInteractive(boolean interactive) {
+        this.interactive = interactive;
+    }
+
 
 }

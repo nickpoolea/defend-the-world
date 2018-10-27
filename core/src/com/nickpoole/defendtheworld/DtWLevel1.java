@@ -2,13 +2,17 @@ package com.nickpoole.defendtheworld;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.Iterator;
@@ -24,8 +28,13 @@ public class DtWLevel1 implements Screen {
     private Array<Asteroid> asteroids;
     private Animation explosion;
 
+    private Label planetHealthLabel;
+
+    private int planetHealth;
+
     private float spawnTimer = 0;
-    private final int spawnInterval = 2;
+    private final double spawnInterval = 0.5;
+    private final int planetDamage = 5;
 
     public DtWLevel1(DtWGame game) {
         this.game = game;
@@ -33,6 +42,8 @@ public class DtWLevel1 implements Screen {
     }
 
     public void create() {
+
+        planetHealth = 100;
 
         stage = new Stage();
         asteroids = new Array<Asteroid>();
@@ -67,7 +78,18 @@ public class DtWLevel1 implements Screen {
         }
         Array<TextureRegion> framesArray = new Array<TextureRegion>(frames);
 
-        explosion = new Animation(0.1f, framesArray, Animation.PlayMode.NORMAL);
+        explosion = new Animation(0.05f, framesArray, Animation.PlayMode.NORMAL);
+
+
+        BitmapFont font = new BitmapFont();
+        LabelStyle style = new LabelStyle( font, Color.WHITE );
+
+        planetHealthLabel = new Label("Planet Health: 100", style);
+        planetHealthLabel.setFontScale(2);
+        planetHealthLabel.setPosition(
+                20, stage.getHeight() - planetHealthLabel.getHeight() * 2
+        );
+        stage.addActor(planetHealthLabel);
 
     }
 
@@ -80,6 +102,7 @@ public class DtWLevel1 implements Screen {
             spawnTimer = 0;
             Asteroid asteroid = new Asteroid();
             asteroid.setRegion(new Texture(Gdx.files.internal("brown-asteroid.png")));
+            asteroid.setAnimation(explosion);
             asteroids.add(asteroid);
             stage.addActor(asteroid);
         }
@@ -95,18 +118,29 @@ public class DtWLevel1 implements Screen {
                 iterator.remove();
             }
 
-            Rectangle asteroidRectangle = asteroid.getBoundingRectangle();
-            Rectangle shipRectangle = ship.getBoundingRectangle();
-            Rectangle planetRectangle = planet.getBoundingRectangle();
-            Rectangle sunRectangle = sun.getBoundingRectangle();
+            if (asteroid.isInteractive()) {
+                Rectangle asteroidRectangle = asteroid.getBoundingRectangle();
+                Rectangle shipRectangle = ship.getBoundingRectangle();
+                Rectangle planetRectangle = planet.getBoundingRectangle();
+                Rectangle sunRectangle = sun.getBoundingRectangle();
 
-            if (shipRectangle.contains(asteroidRectangle) ||
-                    sunRectangle.contains(asteroidRectangle) ||
-                    planetRectangle.contains(asteroidRectangle)
-            ) {
-                asteroid.setAnimation(explosion);
+                if (sunRectangle.contains(asteroidRectangle)) {
+                    asteroid.setDestroyed(true);
+                }
+
+                if (planetRectangle.overlaps(asteroidRectangle)) {
+                    asteroid.setDestroyed(true);
+                    asteroid.setInteractive(false);
+                    planetHealth -= planetDamage;
+                }
+
+                if (shipRectangle.overlaps(asteroidRectangle)) {
+                    asteroid.reverseDirection();
+                }
             }
         }
+
+        planetHealthLabel.setText("Planet Health: " + planetHealth);
 
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

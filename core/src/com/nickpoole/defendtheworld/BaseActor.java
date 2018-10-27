@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class BaseActor extends Actor {
 
-    protected TextureRegion region;
+    protected   TextureRegion region;
     private Rectangle boundary;
 
     public BaseActor() {

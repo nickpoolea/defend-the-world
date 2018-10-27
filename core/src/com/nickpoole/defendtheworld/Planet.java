@@ -10,9 +10,6 @@ public class Planet extends BaseActor {
     public Planet() {
         super();
         angle = 0;
-
-        System.out.println(" width: " + Gdx.graphics.getWidth());
-        System.out.println(" Height: " + Gdx.graphics.getHeight());
     }
 
     @Override
