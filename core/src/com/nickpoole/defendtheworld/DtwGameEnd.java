@@ -1,59 +1,49 @@
 package com.nickpoole.defendtheworld;
 
-
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
-public class DtWMenu implements Screen, InputProcessor {
+public class DtwGameEnd implements Screen, InputProcessor {
 
     private DtWGame game;
     private Stage stage;
 
-    public DtWMenu(DtWGame game) {
+    public DtwGameEnd(DtWGame game) {
         super();
         this.game = game;
         create();
+
     }
 
     public void create() {
 
         stage = new Stage();
 
+
         InputMultiplexer im = new InputMultiplexer(this, stage);
         Gdx.input.setInputProcessor( im );
+
+        BitmapFont font = new BitmapFont();
+        Label.LabelStyle style = new Label.LabelStyle( font, Color.WHITE );
 
         Table table = new Table();
         table.setFillParent(true);
 
-        BitmapFont font = new BitmapFont();
-        LabelStyle style = new LabelStyle( font, Color.WHITE );
-
-        Label gameTitleLabel = new Label("Defend the World!", style);
-        gameTitleLabel.setFontScale(3);
-        table.add(gameTitleLabel);
+        Label gameStatusLabel = new Label("You Lose!", style);
+        gameStatusLabel.setFontScale(3);
+        table.add(gameStatusLabel);
         table.row();
 
-        Label gameDirectionLabel = new Label("Use the mouse to deflect asteroids from hitting the planet", style);
-        gameDirectionLabel.setFontScale(2);
-        table.add(gameDirectionLabel);
-        table.row();
-
-        Label gameStartLabel = new Label("Press SPACE to begin", style);
-        gameStartLabel.setFontScale(3);
-        table.add(gameStartLabel);
+        Label gameReplayLabel = new Label("Press SPACE to play again.", style);
+        gameReplayLabel.setFontScale(3);
+        table.add(gameReplayLabel);
 
         stage.addActor(table);
-
     }
 
     @Override
@@ -73,24 +63,6 @@ public class DtWMenu implements Screen, InputProcessor {
 
         return false;
     }
-
-    @Override
-    public void show() {}
-
-    @Override
-    public void resize(int width, int height) {}
-
-    @Override
-    public void pause() {}
-
-    @Override
-    public void resume() {}
-
-    @Override
-    public void hide() {}
-
-    @Override
-    public void dispose() {}
 
     @Override
     public boolean keyUp(int keycode) {
@@ -126,4 +98,23 @@ public class DtWMenu implements Screen, InputProcessor {
     public boolean scrolled(int amount) {
         return false;
     }
+    
+    @Override
+    public void show() {}
+
+    @Override
+    public void resize(int width, int height) {}
+
+    @Override
+    public void pause() {}
+
+    @Override
+    public void resume() {}
+
+    @Override
+    public void hide() {}
+
+    @Override
+    public void dispose() {}
+
 }

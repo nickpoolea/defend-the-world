@@ -48,6 +48,7 @@ public class DtWLevel1 implements Screen {
         elapsedTime = 0;
 
         stage = new Stage();
+        System.out.println("SIZE: " + stage.getActors().size);
         asteroids = new Array<Asteroid>();
 
         background = new BaseActor();
@@ -148,12 +149,17 @@ public class DtWLevel1 implements Screen {
             }
         }
 
-        planetHealthLabel.setText("Planet Health: " + planetHealth);
+        if (planetHealth > 0) {
+            planetHealthLabel.setText("Planet Health: " + planetHealth);
 
-        Gdx.gl.glClearColor(0,0,0,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act();
-        stage.draw();
+            Gdx.gl.glClearColor(0,0,0,1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            stage.act();
+            stage.draw();
+        } else {
+            game.setScreen(new DtwGameEnd(game));
+        }
+
     }
 
     @Override
